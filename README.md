@@ -1,7 +1,28 @@
 # curso
 Curso
 
-Copiarse el api desde desnuncias-web y limpiarlo
+PHP
+https://windows.php.net/downloads/releases/php-7.4.14-nts-Win32-vc15-x64.zip
+
+ODBC
+https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15
+
+Driver SQL php
+https://docs.microsoft.com/en-us/sql/connect/php/download-drivers-php-sql-server?view=sql-server-ver15
+
+
+copiar php_sqlsrv_74_nts_x64.dll a C:\php\ext\php_sqlsrv.dll
+
+Modificar C:\php\php.ini  agregar
+
+extension=php_sqlsrv.dll
+
+
+
+VPN
+https://openvpn.net/downloads/openvpn-connect-v3-windows.msi
+
+
 
 ```
 Grilla de Clientes
