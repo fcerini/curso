@@ -51,7 +51,7 @@ export class HeroService {
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
     let payload = JSON.stringify(hero);
-    return this.http.put<any>(this.heroesUrl + "hero_put.php",
+    return this.http.post<any>(this.heroesUrl + "hero_put.php",
       payload).pipe(
         tap(aux => {
           console.log(aux);

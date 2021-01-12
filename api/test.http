@@ -2,16 +2,20 @@ GET http://localhost:8888/heroes.php HTTP/1.1
 
 ###
 
+GET http://localhost:8888/hero.php?2 HTTP/1.1
+
+###
+
 POST http://localhost:8888/hero_post.php HTTP/1.1
 
-{"id": 0, "name": "Nuevo 3"}
+{"id": 0, "name": "Agregar"}
 
 
 ###
 
 PUT http://localhost:8888/hero_put.php HTTP/1.1
 
-{"id": 6, "name": "Modificado"}
+{"id": 14, "name": "Nuevo Modificado"}
 
 
 ###
