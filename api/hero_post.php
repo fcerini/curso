@@ -11,18 +11,30 @@ $data = json_decode($input, true);
 $db = SQLSRV::connect();
 
 $stmt = sqlsrv_query($db,
-    "UPDATE Heroes SET name = ?
-    WHERE id = ?", [$data["name"], $data["id"]] );
+    "INSERT INTO Heroes ( name )
+    VALUES (?);
+    SELECT @@IDENTITY id;",
+    [$data["name"]] );
 
 if($stmt === false) {
     SQLSRV::error(500, 'Error interno del servidor', $db);
 }
 
+
+$results= [];
+
 sqlsrv_fetch($stmt);
+
+sqlsrv_next_result($stmt); 
+
+$row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+$results = $data;
+$results["id"] = $row["id"];
 
 sqlsrv_free_stmt($stmt);
 SQLSRV::close($db);
 
-echo $input;
+echo json_encode($results);
 
 ?>
