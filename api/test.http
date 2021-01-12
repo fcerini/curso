@@ -12,3 +12,8 @@ POST http://localhost:8888/hero_post.php HTTP/1.1
 PUT http://localhost:8888/hero_put.php HTTP/1.1
 
 {"id": 6, "name": "Modificado"}
+
+
+###
+
+GET http://localhost:8888/hero_delete.php?9 HTTP/1.1
