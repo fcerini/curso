@@ -1,23 +1,29 @@
-GET http://localhost:8888/heroes.php HTTP/1.1
+GET http://localhost:8888/hero.php HTTP/1.1
 
 ###
 
-GET http://localhost:8888/hero.php?2 HTTP/1.1
+GET http://localhost:8888/hero.php?name=A%' OR 1=1 -- HTTP/1.1
 
 ###
 
-POST http://localhost:8888/hero_post.php HTTP/1.1
-
-{"id": 0, "name": "Agregar"}
-
+GET http://localhost:8888/hero.php/2 HTTP/1.1
 
 ###
 
-PUT http://localhost:8888/hero_put.php HTTP/1.1
-
-{"id": 14, "name": "Nuevo Modificado"}
+DELETE http://localhost:8888/hero.php/39 HTTP/1.1
 
 
 ###
 
-GET http://localhost:8888/hero_delete.php?9 HTTP/1.1
+POST http://localhost:8888/hero.php HTTP/1.1
+Content-Type: application/json
+
+{"id": 0, "name": "NUEVO 2"}
+
+
+###
+
+PUT http://localhost:8888/hero.php HTTP/1.1
+
+{"id": 41, "name": "Nuevo Modificado"}
+

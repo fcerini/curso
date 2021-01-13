@@ -1,6 +1,6 @@
 <?php
 
-class SQLSRV
+class SQL
 {
     public static function connect()
     {            
@@ -8,7 +8,7 @@ class SQLSRV
         
         if (!$db_conn) {
             //die( print_r( sqlsrv_errors(), true));
-            SQLSRV::error(500, 'Error de conexion a la base '.$instancia . '<br>' . json_encode(sqlsrv_errors()[0]));
+            SQL::error(500, 'Error de conexion a la base '.$instancia . '<br>' . json_encode(sqlsrv_errors()[0]));
         }
         return $db_conn;
     }
@@ -23,6 +23,15 @@ class SQLSRV
         }
         die;
     }
+
+    public static function query($db, $query, $params= Array()){
+        $stmt = sqlsrv_query($db, $query, $params);
+        if($stmt === false) { 
+            SQL::error(500, 'Error interno del servidor', $db);
+        }
+        return $stmt;
+    }
+
 
     public static function close($db){
         sqlsrv_close($db);
