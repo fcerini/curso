@@ -19,12 +19,13 @@ $db = SQL::connect();
 //-------------------------------------GET
 if ($method == "GET" && $id == 0){
     $sql = "SELECT id, name FROM Heroes";
-
+    $params = null;
     if (isset( $_GET["name"])){
-        $sql = $sql . " WHERE name LIKE '%". $_GET["name"] ."%'";
+        $params = ["%" . $_GET["name"] . "%"];
+        $sql = $sql . " WHERE name LIKE ? ";
     };
 
-    $stmt = SQL::query($db, $sql, null);
+    $stmt = SQL::query($db, $sql, $params);
 
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $results[] = $row;
