@@ -23,6 +23,8 @@ export class ProductoService {
 
 
   public handleError(err: Response){
+    //TODO: servicio global de errores
+    alert(err.statusText);
     return of([]);
   }
 

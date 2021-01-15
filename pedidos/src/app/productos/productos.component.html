@@ -1,1 +1,32 @@
-<p>productos</p>
+<div *ngIf="!editando">
+    <table>
+        <tr *ngFor="let row of productos">
+            <td>{{row.prodId}} </td>
+            <td>{{row.prodDescripcion}} </td>
+            <td>{{row.prodPrecio}} </td>
+            <td>
+                <button title="editar" (click)="edit(row)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+            <td>
+                <button title="borrar" (click)="delete(row)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div *ngIf="editando">
+
+    <button (click)="aceptar()">
+        Aceptar
+        <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="cancelar()">
+        Cancelar
+        <mat-icon>cancel</mat-icon>
+    </button>
+
+</div>

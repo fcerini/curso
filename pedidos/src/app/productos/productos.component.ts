@@ -10,6 +10,7 @@ import { ProductoService } from '../shared/producto.service';
 export class ProductosComponent implements OnInit {
 
   productos : Producto[] = [];
+  editando = false;
   constructor( private productoService: ProductoService ) { }
 
   ngOnInit(): void {
@@ -20,6 +21,20 @@ export class ProductosComponent implements OnInit {
         console.log(productos);
       } 
     )
+  }
+
+  delete( row : Producto){
+  }
+
+  edit( row : Producto){
+    this.editando = true;
+  }
+
+  aceptar(){
+    this.editando = false;
+  }
+  cancelar(){
+    this.editando = false;
   }
 
 }
