@@ -1,6 +1,6 @@
-<div *ngIf="!editando">
+<div *ngIf="!mostrarFormulario">
     <table>
-        <tr *ngFor="let row of productos">
+        <tr *ngFor="let row of items">
             <td>{{row.prodId}} </td>
             <td>{{row.prodDescripcion}} </td>
             <td>{{row.prodPrecio}} </td>
@@ -16,17 +16,58 @@
             </td>
         </tr>
     </table>
+
+    <button mat-raised-button color="primary" (click)="agregar()">Agregar Producto</button>
+
 </div>
 
-<div *ngIf="editando">
+<div *ngIf="mostrarFormulario">
+    <br>
+    <mat-card style="width: 50%;">
+        <form [formGroup]="form">
+            <div>
+                <div>
+                    <label>Id: </label>
+                    <ul>
+                        <li *ngIf="this.form.value.prodId">{{this.form.value.prodId}}</li>
+                        <li *ngIf="!this.form.value.prodId">Id aun no inicializado</li>
+                    </ul>
+                </div>
 
-    <button (click)="aceptar()">
-        Aceptar
-        <mat-icon>edit</mat-icon>
-    </button>
-    <button (click)="cancelar()">
-        Cancelar
-        <mat-icon>cancel</mat-icon>
-    </button>
+                <div>
+                    <label>Fecha de Alta</label>
+                    <ul>
+                        <li *ngIf="this.form.value.prodFechaAlta">{{this.form.value.prodFechaAlta | date: 'dd-LL-yyyy'}}
+                        </li>
+                        <li *ngIf="!this.form.value.prodFechaAlta">Fecha aun no inicializada</li>
+                    </ul>
+                </div>
+            </div>
 
+            <br>
+            <div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descripcion</mat-label>
+                        <input matInput formControlName="prodDescripcion" required>
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Precio</mat-label>
+                        <input matInput type="number" formControlName="prodPrecio" required>
+                        <mat-error>El campo no puede ser vacio</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div>
+                <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+                &nbsp;
+                <button mat-raised-button  (click)="cancelar()">Cancelar</button>
+            </div>
+        </form>
+    </mat-card>
 </div>
