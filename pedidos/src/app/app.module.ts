@@ -11,11 +11,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { HomeComponent } from './home/home.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { ConfirmarComponent } from './confirmar/confirmar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { PedidosComponent } from './pedidos/pedidos.component';
     HomeComponent,
     ProductosComponent,
     ClientesComponent,
-    PedidosComponent
+    PedidosComponent,
+    ConfirmarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,9 @@ import { PedidosComponent } from './pedidos/pedidos.component';
     MatCardModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatDialogModule
 
 
   ],

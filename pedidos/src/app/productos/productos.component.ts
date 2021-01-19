@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmarComponent } from '../confirmar/confirmar.component';
 import { Producto } from '../shared/producto';
 import { ProductoService } from '../shared/producto.service';
 
@@ -8,16 +12,27 @@ import { ProductoService } from '../shared/producto.service';
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent implements OnInit {
+export class ProductosComponent implements OnInit, AfterViewInit{
 
   items: Producto[] = [];
   seleccionado = new Producto();
+
+  columnas: string[] = ['prodId', 'prodDescripcion', 'prodPrecio', 'prodFechaAlta', 'acciones'];
+  dataSource = new MatTableDataSource<Producto>();
+
 
   form = new FormGroup({});
 
   mostrarFormulario = false;
   constructor(private productoService: ProductoService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog) { }
+
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit(): void {
 
@@ -32,10 +47,17 @@ export class ProductosComponent implements OnInit {
     this.productoService.get().subscribe(
       (productos) => {
         this.items = productos;
-        console.log(productos);
+        this.actualizarTabla();
       }
     )
   }
+
+  actualizarTabla() {
+    this.dataSource.data = this.items;
+    this.dataSource.sort = this.sort;
+  }
+
+
   agregar() {
     this.form.reset();
     this.seleccionado = new Producto();
@@ -43,16 +65,30 @@ export class ProductosComponent implements OnInit {
   }
 
   delete(row: Producto) {
-    this.productoService.delete(row.prodId)
-      .subscribe(() => {
-        this.items = this.items.filter((x) => {
-          if (x.prodId != row.prodId) {
-            return true
-          } else {
-            return false
-          }
-        });
-      });
+
+    const dialogRef = this.dialog.open(ConfirmarComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+        this.productoService.delete(row.prodId)
+          .subscribe(() => {
+
+            //this.items = this.items.filter( x => x !== row);
+
+            this.items = this.items.filter((item) => {
+              if (item.prodId != row.prodId) {
+                return true
+              } else {
+                return false
+              }
+            });
+
+            this.actualizarTabla();
+          });
+      }
+    });
   }
 
   edit(seleccionado: Producto) {
@@ -84,6 +120,7 @@ export class ProductosComponent implements OnInit {
         .subscribe((producto) => {
           this.items.push(producto);
           this.mostrarFormulario = false;
+          this.actualizarTabla();
         });
 
     }

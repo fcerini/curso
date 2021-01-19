@@ -1,20 +1,39 @@
 <div *ngIf="!mostrarFormulario">
-    <table>
-        <tr *ngFor="let row of items">
-            <td>{{row.prodId}} </td>
-            <td>{{row.prodDescripcion}} </td>
-            <td>{{row.prodPrecio}} </td>
-            <td>
-                <button title="editar" (click)="edit(row)">
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="prodId">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let producto"> {{producto.prodId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prodDescripcion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+            <td mat-cell *matCellDef="let producto"> {{ producto.prodDescripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prodPrecio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio ($) </th>
+            <td mat-cell *matCellDef="let producto"> {{producto.prodPrecio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prodFechaAlta">
+            <th mat-header-cell *matHeaderCellDef> Fecha Alta </th>
+            <td mat-cell *matCellDef="let producto"> {{producto.prodFechaAlta | date: 'dd-LL-yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let producto">
+                <button title="editar" (click)="edit(producto)">
                     <mat-icon>edit</mat-icon>
                 </button>
-            </td>
-            <td>
-                <button title="borrar" (click)="delete(row)">
+                <button title="borrar" (click)="delete(producto)">
                     <mat-icon>delete</mat-icon>
                 </button>
-            </td>
-        </tr>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
     </table>
 
     <button mat-raised-button color="primary" (click)="agregar()">Agregar Producto</button>
@@ -66,7 +85,7 @@
             <div>
                 <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
                 &nbsp;
-                <button mat-raised-button  (click)="cancelar()">Cancelar</button>
+                <button mat-raised-button (click)="cancelar()">Cancelar</button>
             </div>
         </form>
     </mat-card>
