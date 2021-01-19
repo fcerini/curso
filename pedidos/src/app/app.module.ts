@@ -19,6 +19,7 @@ import { ProductosComponent } from './productos/productos.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { ConfirmarComponent } from './confirmar/confirmar.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ConfirmarComponent } from './confirmar/confirmar.component';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
+    MatSortModule,
     MatDialogModule
 
 
