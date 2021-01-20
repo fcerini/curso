@@ -20,6 +20,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { ConfirmarComponent } from './confirmar/confirmar.component';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
     MatDialogModule
 
 

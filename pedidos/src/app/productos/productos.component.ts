@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmarComponent } from '../confirmar/confirmar.component';
@@ -29,9 +30,11 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     public dialog: MatDialog) { }
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
@@ -57,6 +60,10 @@ export class ProductosComponent implements OnInit, AfterViewInit{
     this.dataSource.sort = this.sort;
   }
 
+  filter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   agregar() {
     this.form.reset();
