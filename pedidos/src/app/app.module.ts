@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { HomeComponent } from './home/home.component';
 import { ProductosComponent } from './productos/productos.component';
@@ -21,6 +22,8 @@ import { PedidosComponent } from './pedidos/pedidos.component';
 import { ConfirmarComponent } from './confirmar/confirmar.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -47,9 +50,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDialogModule
-
-
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatSelectModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
