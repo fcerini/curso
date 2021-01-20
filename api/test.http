@@ -1,3 +1,7 @@
+GET http://localhost:8888/cliente.php HTTP/1.1
+
+###
+
 GET http://localhost:8888/producto.php HTTP/1.1
 
 ###
@@ -32,6 +36,40 @@ PUT http://localhost:8888/producto.php HTTP/1.1
     "prodId": 15,
     "prodDescripcion":"Celular Nokia",
     "prodPrecio": 345
+}
+
+
+
+
+
+###
+
+GET http://localhost:8888/pedido.php HTTP/1.1
+
+###
+
+DELETE http://localhost:8888/pedido.php/32 HTTP/1.1
+
+
+###
+
+POST http://localhost:8888/pedido.php HTTP/1.1
+Content-Type: application/json
+
+{
+    "pediFecha":"2020-12-15T00:00:00",
+    "pediClienId": 33
+}
+
+
+###
+
+PUT http://localhost:8888/pedido.php HTTP/1.1
+
+{
+    "pediId": 33,
+    "pediFecha":"2020-12-14T00:00:00",
+    "pediClienId": 25
 }
 
 
