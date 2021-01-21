@@ -81,6 +81,10 @@
                     <button mat-raised-button (click)="cancelar()">Cancelar</button>
                 </div>
             </form>
+            
+            <div *ngIf="seleccionado.pediId">
+               <app-pedido-detalle [pediId]="seleccionado.pediId"></app-pedido-detalle> 
+            </div>
         </div>
     </mat-card>
 </div>

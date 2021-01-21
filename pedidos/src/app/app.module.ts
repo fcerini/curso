@@ -24,6 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { PedidoDetallesComponent } from './pedido-detalle/pedido-detalle.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
     ProductosComponent,
     ClientesComponent,
     PedidosComponent,
-    ConfirmarComponent
+    ConfirmarComponent,
+    PedidoDetallesComponent
   ],
   imports: [
     BrowserModule,
