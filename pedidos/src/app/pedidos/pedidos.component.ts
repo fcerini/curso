@@ -7,7 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmarComponent } from '../confirmar/confirmar.component';
 import { Cliente } from '../shared/cliente';
 import { ClienteService } from '../shared/cliente.service';
+import { GlobalService } from '../shared/global.service';
 import { Pedido } from '../shared/pedido';
+import { PedidoDetalleService } from '../shared/pedido-detalle.service';
 import { PedidoService } from '../shared/pedido.service';
 
 
@@ -34,6 +36,8 @@ export class PedidosComponent implements OnInit, AfterViewInit {
 
   constructor(private pedidoService: PedidoService,
     private clienteService: ClienteService,
+    private pedidoDetalleService : PedidoDetalleService,
+    private global: GlobalService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) { }
 
@@ -126,7 +130,7 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     if (this.seleccionado.pediId) {
       this.pedidoService.put(this.seleccionado)
         .subscribe((pedido) => {
-          this.mostrarFormulario = false;
+          this.actualizarDetalle(pedido.pediId);
         });
 
     } else {
@@ -134,14 +138,34 @@ export class PedidosComponent implements OnInit, AfterViewInit {
         .subscribe((pedido: Pedido) => {
           pedido.clienNombre = this.clientes.find(c => c.clienId == pedido.pediClienId)!.clienNombre;
           this.items.push(pedido);
-          this.mostrarFormulario = false;
-          this.actualizarTabla();
+          this.actualizarDetalle(pedido.pediId);
+          
         });
 
     }
 
   }
   cancelar() {
+    this.mostrarFormulario = false;
+  }
+
+  actualizarDetalle(pediId:number){
+    this.global.items.forEach( (i)=>{
+      i.detaPediId = pediId;
+      if (i.detaBorrado){
+        this.pedidoDetalleService.delete(i.detaId).subscribe();
+      }
+
+      if (i.detaId < 0){
+        this.pedidoDetalleService.post(i).subscribe();
+      }
+
+      if (i.detaId > 0){
+        this.pedidoDetalleService.put(i).subscribe();
+      }
+    });
+
+    this.actualizarTabla();
     this.mostrarFormulario = false;
   }
 

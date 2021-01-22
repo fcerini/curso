@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmarComponent } from '../confirmar/confirmar.component';
+import { GlobalService } from '../shared/global.service';
 import { PedidoDetalle } from '../shared/pedido-detalle';
 import { PedidoDetalleService } from '../shared/pedido-detalle.service';
 import { Producto } from '../shared/producto';
@@ -18,10 +19,9 @@ export class PedidoDetallesComponent implements OnInit {
 
   @Input() pediId!: number;
 
-  items: PedidoDetalle[] = [];
   seleccionado = new PedidoDetalle();
 
-  columnas: string[] = ['prodDescripcion', 'detaCantidad', 'detaPrecio', 'acciones'];
+  columnas: string[] = ['detaId','prodDescripcion', 'detaCantidad', 'detaPrecio', 'acciones'];
   dataSource = new MatTableDataSource<PedidoDetalle>();
 
 
@@ -29,9 +29,12 @@ export class PedidoDetallesComponent implements OnInit {
   mostrarFormulario = false;
 
   productos: Producto[] = [];
+
+  detaIdNuevos = -1;
   
 
-  constructor(private pedidoDetalleService: PedidoDetalleService,
+  constructor( public global: GlobalService,
+    private pedidoDetalleService: PedidoDetalleService,
     private productoService: ProductoService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) { }
@@ -52,7 +55,7 @@ export class PedidoDetallesComponent implements OnInit {
 
     this.pedidoDetalleService.get(this.pediId).subscribe(
       (pedidoDetalles) => {
-        this.items = pedidoDetalles;
+        this.global.items = pedidoDetalles;
         this.actualizarTabla();
       }
     );
@@ -65,12 +68,16 @@ export class PedidoDetallesComponent implements OnInit {
   }
 
   actualizarTabla() {
-    this.dataSource.data = this.items;
+    this.dataSource.data = this.global.items.filter(x=> x.detaBorrado==false);
   }
 
   agregar() {
-    this.form.reset();
+
+    this.detaIdNuevos-- ;
     this.seleccionado = new PedidoDetalle();
+    this.seleccionado.detaId = this.detaIdNuevos;
+
+    this.form.setValue(this.seleccionado);
     this.mostrarFormulario = true;
   }
 
@@ -82,13 +89,8 @@ export class PedidoDetallesComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
 
       if (result) {
-        this.pedidoDetalleService.delete(row.detaId)
-          .subscribe(() => {
-
-            this.items = this.items.filter(x => x !== row);
-
+            row.detaBorrado = true;
             this.actualizarTabla();
-          });
       }
     });
   }
@@ -98,7 +100,7 @@ export class PedidoDetallesComponent implements OnInit {
     this.seleccionado = seleccionado;
     
     this.form.setValue(seleccionado);
-/*
+/* si el form tiene menos campos que el objeto seleccionado...
     this.form.setValue({
       detaProdId: seleccionado.detaProdId,
       detaCantidad: seleccionado.detaCantidad,
@@ -114,31 +116,19 @@ export class PedidoDetallesComponent implements OnInit {
 
     Object.assign(this.seleccionado, this.form.value);
 
-
     // si el formulario es diferente asignar uno por uno...
     //this.seleccionado.prodDescripcion = this.form.value.prodDescripcion;
     //this.seleccionado.prodPrecio = this.form.value.prodPrecio;
+    
+    // actualizo descripcion para que se vea en la grilla
+    this.seleccionado.prodDescripcion = this.productos.find(c => c.prodId == this.seleccionado.detaProdId)!.prodDescripcion;
 
-
-    if (this.seleccionado.detaId) {
-      this.pedidoDetalleService.put(this.seleccionado)
-        .subscribe((pedidoDetalle) => {
-          this.mostrarFormulario = false;
-        });
-
-    } else {
-      this.seleccionado.detaPediId = this.pediId;
-
-      this.pedidoDetalleService.post(this.seleccionado)
-        .subscribe((pedidoDetalle: PedidoDetalle) => {
-
-          pedidoDetalle.prodDescripcion = this.productos.find(c => c.prodId == pedidoDetalle.detaProdId)!.prodDescripcion;
-          this.items.push(pedidoDetalle);
-          this.mostrarFormulario = false;
-          this.actualizarTabla();
-        });
-
-    }
+    // para que sea mas facil, lo borro y agrego de nuevo
+    this.global.items = this.global.items.filter(x=> x.detaId != this.seleccionado.detaId );
+    this.global.items.push(this.seleccionado);
+    
+    this.mostrarFormulario = false;
+    this.actualizarTabla();
 
   }
   cancelar() {

@@ -3,7 +3,8 @@
     <mat-card>
 
         <div [hidden]="mostrarFormulario">
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table [dataSource]="dataSource">
+                <mat-text-column name="detaId" headerText="id"></mat-text-column>
                 <mat-text-column name="prodDescripcion" headerText="Producto"></mat-text-column>
                 <mat-text-column name="detaCantidad" headerText="Cant."></mat-text-column>
                 <mat-text-column name="detaPrecio" headerText="Precio"></mat-text-column>
@@ -33,6 +34,8 @@
         <div *ngIf="mostrarFormulario">
 
             <form [formGroup]="form">
+                <input type="text" formControlName="detaId">
+
                 <div>
                     <mat-form-field appearance="outline">
                         <mat-label>Producto</mat-label>
