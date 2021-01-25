@@ -121,11 +121,13 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     }
 
     Object.assign(this.seleccionado, this.form.value);
-
     // si el formulario es diferente asignar uno por uno...
     //this.seleccionado.prodDescripcion = this.form.value.prodDescripcion;
     //this.seleccionado.prodPrecio = this.form.value.prodPrecio;
 
+
+    // actualizo el nombre para que se vea en la grilla
+    this.seleccionado.clienNombre =this.clientes.find(c => c.clienId == this.seleccionado.pediClienId)!.clienNombre;
 
     if (this.seleccionado.pediId) {
       this.pedidoService.put(this.seleccionado)
@@ -136,7 +138,8 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     } else {
       this.pedidoService.post(this.seleccionado)
         .subscribe((pedido: Pedido) => {
-          pedido.clienNombre = this.clientes.find(c => c.clienId == pedido.pediClienId)!.clienNombre;
+          // solo para que se vea en la grilla
+          pedido.clienNombre = this.seleccionado.clienNombre;
           this.items.push(pedido);
           this.actualizarDetalle(pedido.pediId);
           
