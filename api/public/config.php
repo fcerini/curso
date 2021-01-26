@@ -5,4 +5,7 @@ define('DB_DATABASE', "Curso");
 define('DB_USERNAME', "sa");
 define('DB_PASSWORD', "Digital23");
 
+define ( 'TOKEN_KEY', 'LaKeyDelCurso' );
+
+
 ?>

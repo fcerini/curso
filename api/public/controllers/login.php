@@ -1,36 +1,34 @@
 <?php
     $app->post('/login', function ($request, $response, $args) {
 
-        $input = file_get_contents("php://input");
-        $data = json_decode($input, true);
-
         $res = [];
     
-        if($data["user"] == "admin" && $data["pass"] == "admin"){
-            $res["user"] = $data["user"];
+        // esto deberia irse a buscar a la base de datos!!!
+        if(DATA["user"] == "admin" && DATA["pass"] == "admin"){
+
+            $res["user"] = DATA["user"];
             
-            $idusuario = 99;
+            $idusuario = 1;
             $res["id"] = $idusuario;
 
             $token = [];
             $token["idUsuario"] = $idusuario;
             $token["usuario"] = "Usuario ADMIN";
-            $token["permisos"] = ["ADMIN_VER"
-                                 ,"ADMIN_AGREGAR"
-                                 ,"ADMIN_MODIFICAR"
-                                 ,"ADMIN_BORRAR"];
+            $token["permisos"] = ["PRODUCTO_BORRAR"
+                                 ,"CLIENTE_BORRAR"
+                                 ,"PEDIDO_BORRAR"];
     
             $res["token"] = G::CrearToken($token);
-        }elseif($data["user"] == "user" && $data["pass"] == "user"){
-            $res["user"] = $data["user"];
+        } elseif (DATA["user"] == "juan" && DATA["pass"] == "1234"){
+            $res["user"] = DATA["user"];
             
-            $idusuario = 11;
+            $idusuario = 2;
             $res["id"] = $idusuario;
 
             $token = [];
             $token["idUsuario"] = $idusuario;
             $token["usuario"] = "Juan Perez";
-            $token["permisos"] = ["ADMIN_VER"];
+            $token["permisos"] = [];
             
             $res["token"] = G::CrearToken($token);
         }else{

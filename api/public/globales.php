@@ -126,33 +126,6 @@ class G
 
     }
 
-    public static function Permisos($codigo=null) {
-        // Arrays de permisos por modulo
-        include("permisos/permisosGis.php");
-        $permisos = array();
-        $permisos = array_merge($permisos, $permisosGis);
-
-        if (isset($codigo) && $codigo != 'LISTAR') {
-            foreach($permisos as $permiso) {
-                if ($permiso["codigo"] == $codigo)
-                    return $permiso;
-            }
-        }
-        if($codigo == 'LISTAR')
-            return $permisos;
-        else
-            return array();
-    }
-    
-
-    public static function FormatDatetoSQL ($strDate) {
-        $result = null;
-        if(isset($strDate)) {
-            $date = new DateTime($strDate);;
-            $result = (strpos($strDate, ":") === false) ? $date->format('Ymd') : $date->format('Ymd H:i:s');
-        }
-        return $result;
-    }
 }
 
 
