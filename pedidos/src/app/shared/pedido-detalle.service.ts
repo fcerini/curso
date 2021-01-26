@@ -15,7 +15,7 @@ export class PedidoDetalleService
     protected http: HttpClient,
     protected app: AppConfigService
   ) {
-    super("pedido-detalle.php", http, app);
+    super("pedido-detalle", http, app);
   }
 
 }

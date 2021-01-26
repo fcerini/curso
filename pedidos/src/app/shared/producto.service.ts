@@ -15,7 +15,7 @@ extends ApiService<Producto>{
     protected http: HttpClient,
     protected app: AppConfigService
   ) {
-    super("producto.php", http, app);
+    super("producto", http, app);
   }
 
 

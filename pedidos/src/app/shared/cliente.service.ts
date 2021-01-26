@@ -15,6 +15,6 @@ export class ClienteService
     protected http: HttpClient,
     protected app: AppConfigService
   ) {
-    super("cliente.php", http, app);
+    super("cliente", http, app);
   }
 }
