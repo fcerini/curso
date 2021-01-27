@@ -4,37 +4,34 @@
         $res = [];
     
         // esto deberia irse a buscar a la base de datos!!!
-        if(DATA["user"] == "admin" && DATA["pass"] == "admin"){
+        if(DATA["usuaLogin"] == "admin" && DATA["usuaPassword"] == "admin"){
 
-            $res["user"] = DATA["user"];
-            
-            $idusuario = 1;
-            $res["id"] = $idusuario;
+            $res["usuaId"] = 1;
+            $res["usuaLogin"] = DATA["usuaLogin"];
+            $res["usuaNombre"] = "Usuario ADMIN";
 
-            $token = [];
-            $token["idUsuario"] = $idusuario;
-            $token["usuario"] = "Usuario ADMIN";
-            $token["permisos"] = ["PRODUCTO_BORRAR"
-                                 ,"CLIENTE_BORRAR"
-                                 ,"PEDIDO_BORRAR"];
+            $token = $res;
+            $token["permisos"] =  ["PRODUCTO_DELETE"
+                                    ,"CLIENTE_DELETE"
+                                    ,"PEDIDO_POST"
+                                    ,"PEDIDO_DELETE"];
     
-            $res["token"] = G::CrearToken($token);
-        } elseif (DATA["user"] == "juan" && DATA["pass"] == "1234"){
-            $res["user"] = DATA["user"];
-            
-            $idusuario = 2;
-            $res["id"] = $idusuario;
+            $res["usuaToken"] = G::CrearToken($token);
+        } elseif (DATA["usuaLogin"] == "juan" && DATA["usuaPassword"] == "1234"){
+            $res["usuaId"] = 2;
+            $res["usuaLogin"] = DATA["usuaLogin"];
+            $res["usuaNombre"] = "Juan Perez";
 
-            $token = [];
-            $token["idUsuario"] = $idusuario;
-            $token["usuario"] = "Juan Perez";
+            $token = $res;
             $token["permisos"] = [];
-            
-            $res["token"] = G::CrearToken($token);
+    
+            $res["usuaToken"] = G::CrearToken($token);
+
         }else{
-            $res["user"] = "Error";
-            $res["id"] = -1;
-            $res["token"] = null;
+            $res["usuaId"] = -1;
+            $res["usuaLogin"] = null;
+            $res["usuaNombre"] = null;
+            $res["usuaToken"] = null;
         }
 
         $payload = json_encode($res);

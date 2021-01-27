@@ -25,7 +25,7 @@ $app = AppFactory::create();
 
 
 // Parse json, form data and xml
-$app->addBodyParsingMiddleware();
+//$app->addBodyParsingMiddleware();
 
 $app->addRoutingMiddleware();
 $middleware = $app->addErrorMiddleware(true,true,true);

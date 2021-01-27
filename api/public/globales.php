@@ -50,13 +50,8 @@ class G
     public static function Autenticar($request, $permiso=null, $log=true)
     {
         $jwt= null;
-        if ($request->getHeader('SIS_auth') != null && count($request->getHeader('SIS_auth'))) {
-            $jwt=$request->getHeader('SIS_auth')[0];
-        }elseif (isset(getallheaders()['SIS_auth'])) {
-            $jwt=getallheaders()['SIS_auth'] ;
-        } elseif (isset(getallheaders()['Sis_auth'])) {
-            $jwt=getallheaders()['Sis_auth'] ;
-        } elseif (isset(getallheaders()['Authorization'])) {
+        
+        if (isset(getallheaders()['Authorization'])) {
             $jwt= getallheaders()['Authorization']  ;
         }
 

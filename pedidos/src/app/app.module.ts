@@ -26,6 +26,7 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { PedidoDetallesComponent } from './pedido-detalle/pedido-detalle.component';
 import { AppConfigService } from './core/config.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AppConfigService } from './core/config.service';
     ClientesComponent,
     PedidosComponent,
     ConfirmarComponent,
-    PedidoDetallesComponent
+    PedidoDetallesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

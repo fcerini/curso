@@ -20,6 +20,7 @@ $app->get('/pedido', function ($request, $response, $args) {
 
 
 $app->delete('/pedido/{id}', function ($request, $response, $args) {
+    $token = G::Autenticar($request, "PEDIDO_DELETE");
 
     $id = $args['id'];
 
@@ -54,7 +55,7 @@ $app->put('/pedido', function ($request, $response, $args) {
 });
 
 $app->post('/pedido', function ($request, $response, $args) {
-    //$token = G::Autenticar($request, "ADMIN_MODIFICAR");
+    $token = G::Autenticar($request, "PEDIDO_POST");
 
     $db = SQL::connect();
     $model = new Pedido();

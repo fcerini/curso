@@ -1,19 +1,30 @@
-<div style="width: 50%;" class="mat-elevation-z8">
-  <mat-card>
-    <h2>Sistema Integral de carga de Pedidos</h2>
-    <button mat-button>
-      <mat-icon>table_view</mat-icon>
-      <a routerLink="/pedidos">Pedidos</a>
-    </button>
-    <button mat-button>
-      <mat-icon>assignment</mat-icon>
-      <a routerLink="/productos">Productos</a>
-    </button>
-    <button mat-button>
-      <mat-icon>account_box</mat-icon>
-      <a routerLink="/clientes">Clientes</a>
-    </button>
-  </mat-card>
+<div *ngIf="global.usuarioLogueado.usuaLogin">
+  <div style="width: 80%;" class="mat-elevation-z8">
+    <mat-card>
+      <h2>Sistema Integral de carga de Pedidos:
+        {{global.usuarioLogueado.usuaNombre}}
+      </h2>
+      <button mat-button>
+        <mat-icon>table_view</mat-icon>
+        <a routerLink="/pedidos">Pedidos</a>
+      </button>
+      <button mat-button>
+        <mat-icon>assignment</mat-icon>
+        <a routerLink="/productos">Productos</a>
+      </button>
+      <button mat-button>
+        <mat-icon>account_box</mat-icon>
+        <a routerLink="/clientes">Clientes</a>
+      </button>      
+      <button mat-button (click)="salir()">
+        <mat-icon>logout</mat-icon>
+        Salir
+      </button>
+    </mat-card>
+  </div>
+  <router-outlet></router-outlet>        
 </div>
 
-<router-outlet></router-outlet>
+<div *ngIf="!global.usuarioLogueado.usuaLogin">
+  <app-login></app-login>
+</div>
